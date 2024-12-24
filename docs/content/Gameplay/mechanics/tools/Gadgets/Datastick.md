@@ -5,7 +5,7 @@ title: Datastick
 
 Copies configurations and filters of AE2 ME busses and hatch multiparts, as well as links ME Pattern buffers and proxies together
 
-Shift right click a ME hatch or bus to copy the configuration, it will tell you in chat when you do,
+Sneak right click a ME hatch or bus to copy the configuration, it will tell you in chat when you do,
 
 Right click an AE2 ME multipart to paste the config from the previous copy.
 

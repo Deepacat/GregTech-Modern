@@ -6,7 +6,7 @@ Scanner is a tool that is used to get info from the blocks it is used on
 The scanner has 6 modes, 
 `recipe info`, `environmental info`, `block info`, `machine info`, `electrical info`, and `all info`
 
-It can be shift right clicked in air to change modes, right click on a block to get the info in chat.
+It can be Sneak right clicked in air to change modes, right click on a block to get the info in chat.
 
 ## Recipe info
 This mode requires energy to use
