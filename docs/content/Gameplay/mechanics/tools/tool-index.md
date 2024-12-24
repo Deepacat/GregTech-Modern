@@ -1,5 +1,5 @@
 ---
-title: Basic Tools
+title: Tools Index
 ---
 
 
@@ -44,9 +44,7 @@ Not much to be said about these aside from the axe, they're versions of the vani
 
 These are tools that have an area of effect for mining
 
-- Mining Hammer (3x3x1 Pickaxe)
-- Spade (3x3x1 Shovel)
-- Scythe(5x5x3 Hoe)
+``` Mining Hammer (3x3x1 Pickaxe), Spade (3x3x1 Shovel), Scythe(5x5x3 Hoe)```
 ## Electric Tools
 
 These tools are faster and the AOE variants have wider area of effect based on the tier of the used power unit
@@ -62,3 +60,8 @@ It is configurable in config
 - Electric Screwdriver
 - Electric Wirecutter
 ## Armours
+- Hazmat suit
+- Nanomuscle Suite Armor
+- Quarktech Suite Armor
+- Simple PPE
+- Jetpacks
