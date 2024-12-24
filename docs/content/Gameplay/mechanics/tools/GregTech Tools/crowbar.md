@@ -1,3 +1,5 @@
-Document Me!
+# Crowbars
 
-<https://github.com/GregTechCEu/GregTech-Modern/tree/1.20.1/docs>
+Right clicking on a machines side that has a cover removes the cover.
+
+Is used to craft maintenance hatches as well as repair their state.
