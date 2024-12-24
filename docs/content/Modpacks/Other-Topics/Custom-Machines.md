@@ -69,8 +69,9 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
         .setSound(GTSoundEntries.ARC)
         .setMaxTooltips(6)
 })
+
 GTCEuStartupEvents.registry('gtceu:machine', event => {
-    event.create('coal_burner', 'generator') // (1)
+	event.create('coal_burner', 'generator') // (1)
         .tiers(GTValues.ULV) // (2)
         .definition((tier, builder) => (
             builder
