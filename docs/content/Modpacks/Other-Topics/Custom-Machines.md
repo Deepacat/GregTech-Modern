@@ -9,52 +9,84 @@ title: Custom Machines
 ## Creating Custom Steam Machine
 
 ```js title="test_steam_machine.js"
+GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
+    event.create('example_steam_machine_recipes')
+        .setEUIO('in')
+        .setMaxIOSize(6, 1, 0, 0) // (1)
+        .setSlotOverlay(false, false, GuiTextures.COMPRESSOR_OVERLAY)
+        .setProgressBar(GuiTextures.PROGRESS_BAR_MIXER, FillDirection.LEFT_TO_RIGHT)
+        .setSound(GTSoundEntries.MIXER)
+})
+
 GTCEuStartupEvents.registry('gtceu:machine', event => {
-    event.create('test_simple_steam_machine', 'steam', true) // (1)
+	    event.create('example_steam_singleblock', 'steam') // (2)
+	        .hasHighPressure(true) // (3)
+	        .definition((hp, builder) => (
+	            builder
+	                .recipeType("example_steam_machine_recipes") // (4)
+	                .workableSteamHullRenderer(hp, 'gtceu:block/machines/mixer') // (5)
+	        ))
 })
 ```
 
-1. Machine ID, Machine Type, Has High Pressure Varient
+1. (item in, item out, fluid in, fluid out) You *cannot* use fluid slots on steam machines currently due to steam tank issues
+2. Machine ID, Machine Type ('steam' for a steam singeblock)
+3. Register a high pressure variant of the steam machine
+4. The recipe type by id used for the machine
+5. Use the steam hull renderer(pass through if high pressure, overlay texture resource path)
 
 
 ## Creating Custom Electric Machine
 
 ```js title="test_electric_machine.js"
 GTCEuStartupEvents.registry('gtceu:machine', event => {
-    event.create('test_electric', 'simple', 0, GTValues.LV, GTValues.MV, GTValues.HV) // (1)
-        .rotationState(RotationState.NON_Y_AXIS)
-        .recipeType('test_recipe_type')
-        .tankScalingFunction(tier => tier * 3200)
+	event.create('atomic_reconstructor', 'simple') // (1)
+		.tiers(GTValues.LV, GTValues.MV, GTValues.HV, GTValues.EV, GTValues.IV, GTValues.LuV, GTValues.ZPM, GTValues.UV, GTValues.UHV, GTValues.UEV, GTValues.UIV) // (2)
+		.definition((tier, builder) =>
+			builder
+				.langValue(GTValues.VLVH[tier] + " Atomic Reconstructor") // (3)
+				.recipeType('atomic_reconstruction') // (4)
+				.workableTieredHullRenderer('gtceu:block/machines/reconstructor') //(5)
+		)
 })
 ```
 
 
-1. Machine ID, Machine Type, Pollution Produced, Voltage Tiers
-
-
-
-## Creating Custom Kinetic Machine
-
-```js title="test_kinetic_machine.js"
-GTCEuStartupEvents.registry('gtceu:machine', event => {
-    event.create('test_kinetic', 'kinetic', GTValues.LV, GTValues.MV, GTValues.HV)
-        .rotationState(RotationState.NON_Y_AXIS)
-        .recipeType('test_kinetic_recipe_type')
-        .tankScalingFunction(tier => tier * 3200)
-})
-```
-
+1. Machine ID, Machine Type(Simple Singleblock)
+2. Tiers to register for machine
+3. override lang generator, if you do not add this it will autogen based on id
+4. recipe type used
+5. uses the tiers hull texture, and resource path to a custom machine overlay
 
 ## Creating Custom Generator
 
 ```js title="test_generator.js"
+GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
+    event.create('coal_burner_recipe_type')
+        .setEUIO('out')
+        .setMaxIOSize(1, 0, 0, 0)
+        .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, FillDirection.LEFT_TO_RIGHT)
+        .setSound(GTSoundEntries.ARC)
+        .setMaxTooltips(6)
+})
 GTCEuStartupEvents.registry('gtceu:machine', event => {
-    event.create('test_generator', 'generator', GTValues.LV, GTValues.MV, GTValues.HV) // (1)
-        .recipeType('test_generator_recipe_type')
-        .tankScalingFunction(tier => tier * 3200)
+    event.create('coal_burner', 'generator') // (1)
+        .tiers(GTValues.ULV) // (2)
+        .definition((tier, builder) => (
+            builder
+                .langValue("Shoddy Coal Burning Generator") // (3)
+                .recipeType('coal_burner_recipe_type') // (4)
+                .recipeModifier(MachineModifiers.SIMPLE_GENERATOR) // (5)
+                .simpleGeneratorMachineRenderer('gtceu:block/generators/combustion') // (6)
+        ))
 })
 ```
-
+1. Machine ID, Machine Type(Simple Singleblock)
+2. Tiers to register for machine
+3. override lang generator, if you do not add this it will autogen based on id
+4. recipe type used
+5. recipe modifier for generator behaviour (when using generator beyond lowest tier, the recipes are paralleled for higher energy output)
+6. uses the tiers hull texture, and resource path to a custom machine overlay
 
 ## Creating Custom Multiblock
 
